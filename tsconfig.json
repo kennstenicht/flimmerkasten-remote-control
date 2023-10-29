@@ -9,7 +9,8 @@
       "flimmerkasten-remote-control/tests/*": ["tests/*"],
       "flimmerkasten-remote-control/*": ["app/*"],
       "*": ["types/*"]
-    }
+    },
+    "skipLibCheck": true
   },
   "glint": {
     "environment": ["ember-loose", "ember-template-imports"]
