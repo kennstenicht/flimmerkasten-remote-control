@@ -3,6 +3,7 @@
 module.exports = function (environment) {
   const ENV = {
     modulePrefix: 'flimmerkasten-remote-control',
+    podModulePrefix: 'flimmerkasten-remote-control/routes',
     environment,
     rootURL: '/',
     locationType: 'history',
