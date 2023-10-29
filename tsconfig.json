@@ -10,5 +10,8 @@
       "flimmerkasten-remote-control/*": ["app/*"],
       "*": ["types/*"]
     }
+  },
+  "glint": {
+    "environment": ["ember-loose", "ember-template-imports"]
   }
 }
