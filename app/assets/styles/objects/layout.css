@@ -1,0 +1,27 @@
+/* ==========================================================================
+   # LAYOUT
+   ========================================================================== */
+
+.scope {
+  display: block;
+  margin: 0;
+  margin-left: calc(var(--spacing-base) * -1);
+  padding: 0;
+  list-style: none;
+  letter-spacing: 0;
+  font-size: 0;
+}
+
+.item {
+  display: inline-block;
+  box-sizing: border-box;
+  padding-bottom: var(--spacing-base);
+  padding-left: var(--spacing-base);
+  width: 100%;
+  vertical-align: top;
+  font-size: 1rem;
+}
+
+.item--mobile-1\/2 {
+  width: 50%;
+}
