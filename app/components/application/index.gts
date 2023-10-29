@@ -1,7 +1,7 @@
-import pageTitle from 'ember-page-title/helpers/page-title';
+import { Head } from './head';
 
-<template>
-  {{pageTitle 'flimmerkasten'}}
+export const Application = <template>
+  <Head />
 
   {{outlet}}
-</template>
+</template>;

@@ -81,6 +81,10 @@ module.exports = function (defaults) {
                 },
               ],
             },
+            {
+              test: /\.(png|svg|jpg|jpeg|gif)$/i,
+              type: 'asset/resource',
+            },
           ],
         },
       },
