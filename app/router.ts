@@ -8,6 +8,7 @@ export default class Router extends EmberRouter {
 
 Router.map(function () {
   this.route('remote-control', { path: ':remote_control_id' }, function () {
+    this.route('iframe');
     this.route('tetris');
   });
   // Add route declarations here
