@@ -68,8 +68,7 @@ export class RemoteControl extends Component<RemoteControlSignature> {
       {{outlet}}
     {{else}}
       <h1 {{didInsert (perform this.createConnection)}}>
-        Connecting to
-        {{@model}}
+        Connecting...
       </h1>
     {{/if}}
   </template>
