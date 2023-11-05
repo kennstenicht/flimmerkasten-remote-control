@@ -7,7 +7,7 @@ import { restartableTask, timeout } from 'ember-concurrency';
 
 export class PeerService extends Service {
   // Defaults
-  @tracked object: Peer = new Peer({ debug: 0 });
+  @tracked object?: Peer;
   @tracked connectionId?: string;
   @tracked errorMessage?: string;
   @tracked open: boolean = false;

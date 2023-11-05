@@ -10,6 +10,7 @@ Router.map(function () {
   this.route('remote-control', { path: ':remote_control_id' }, function () {
     this.route('iframe');
     this.route('tetris');
+    this.route('snake');
   });
   // Add route declarations here
 });

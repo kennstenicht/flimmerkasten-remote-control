@@ -35,7 +35,7 @@ export class RemoteControl extends Component<RemoteControlSignature> {
 
   // Functions
   createConnection = restartableTask(async () => {
-    const connection = this.peer.object.connect(this.args.model);
+    const connection = this.peer.object?.connect(this.args.model);
 
     connection.on('close', () => {
       this.head.title = `connecting to ${this.args.model}`;
