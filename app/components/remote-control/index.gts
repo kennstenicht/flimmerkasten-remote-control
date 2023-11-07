@@ -41,7 +41,7 @@ export class RemoteControl extends Component<RemoteControlSignature> {
   @tracked playerName: string = '';
 
   updateName = (event: Event) => {
-    const value = event.target?.value;
+    const value = (event.target as HTMLInputElement).value;
     this.playerName = value;
     localStorage.setItem(playerNameKey, value);
   };
@@ -88,11 +88,13 @@ export class RemoteControl extends Component<RemoteControlSignature> {
       {{outlet}}
     {{else}}
       <div>
-        <input
-          class={{bem styles 'input'}}
-          value={{this.playerName}}
-          {{on 'input' this.updateName}}
-        />
+        <label>
+          <input
+            class={{bem styles 'input'}}
+            value={{this.playerName}}
+            {{on 'input' this.updateName}}
+          />
+        </label>
 
         <button
           type='button'

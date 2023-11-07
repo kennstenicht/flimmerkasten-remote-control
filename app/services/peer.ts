@@ -1,5 +1,6 @@
 import Service from '@ember/service';
 import { registerDestructor } from '@ember/destroyable';
+import type Owner from '@ember/owner';
 import Peer, { DataConnection } from 'peerjs';
 import { tracked } from '@glimmer/tracking';
 import { TrackedMap } from 'tracked-built-ins';
@@ -14,8 +15,8 @@ export class PeerService extends Service {
   connections: TrackedMap<string, DataConnection> = new TrackedMap();
 
   // Constructor
-  constructor() {
-    super();
+  constructor(owner: Owner) {
+    super(owner);
 
     this.createPeer.perform();
 
