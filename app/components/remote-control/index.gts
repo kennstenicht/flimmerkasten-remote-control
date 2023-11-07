@@ -7,13 +7,21 @@ import { HeadService } from 'flimmerkasten-remote-control/services/head';
 import { restartableTask } from 'ember-concurrency';
 import perform from 'ember-concurrency/helpers/perform';
 import { registerDestructor } from '@ember/destroyable';
-import didInsert from '@ember/render-modifiers/modifiers/did-insert';
+import { on } from '@ember/modifier';
+import { hash } from '@ember/helper';
+import { tracked } from '@glimmer/tracking';
+
+import bem from 'flimmerkasten-remote-control/helpers/bem';
+
+import styles from './styles.css';
 
 interface RemoteControlSignature {
   Args: {
     model: string;
   };
 }
+
+const playerNameKey = 'flimmerkasten:playerName';
 
 export class RemoteControl extends Component<RemoteControlSignature> {
   // Services
@@ -23,10 +31,20 @@ export class RemoteControl extends Component<RemoteControlSignature> {
   constructor(owner: RemoteControl, args: RemoteControlSignature['Args']) {
     super(owner, args);
 
+    this.playerName = localStorage.getItem(playerNameKey) || 'player name';
+
     registerDestructor(this, () => {
       this.connection?.close();
     });
   }
+
+  @tracked playerName: string = '';
+
+  updateName = (event: Event) => {
+    const value = (event.target as HTMLInputElement).value;
+    this.playerName = value;
+    localStorage.setItem(playerNameKey, value);
+  };
 
   // Getter and setter
   get connection() {
@@ -35,7 +53,9 @@ export class RemoteControl extends Component<RemoteControlSignature> {
 
   // Functions
   createConnection = restartableTask(async () => {
-    const connection = this.peer.object?.connect(this.args.model);
+    const connection = this.peer.object?.connect(this.args.model, {
+      metadata: { playerName: this.playerName },
+    });
 
     connection?.on('close', () => {
       this.head.title = `connecting to ${this.args.model}`;
@@ -67,9 +87,27 @@ export class RemoteControl extends Component<RemoteControlSignature> {
       {{! template-lint-disable no-outlet-outside-routes }}
       {{outlet}}
     {{else}}
-      <h1 {{didInsert (perform this.createConnection)}}>
-        Connecting...
-      </h1>
+      <div>
+        <label>
+          <input
+            class={{bem styles 'input'}}
+            value={{this.playerName}}
+            {{on 'input' this.updateName}}
+          />
+        </label>
+
+        <button
+          type='button'
+          class={{bem styles 'button' (hash type='confirm')}}
+          {{on 'click' (perform this.createConnection)}}
+        >
+          <span class={{bem styles 'label'}}>Confirm</span>
+        </button>
+
+        <h1>
+          Connecting...
+        </h1>
+      </div>
     {{/if}}
   </template>
 }

@@ -21,6 +21,7 @@ input:not([type="checkbox"]) {
   border-width: var(--border-width-small);
   border-style: solid;
   border-color: var(--color-black);
+  font-family: var(--font-family);
   font-size: var(--font-size);
 
   &:focus {
