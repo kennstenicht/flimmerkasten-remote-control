@@ -6,6 +6,7 @@ import { fn } from '@ember/helper';
 import { hash } from '@ember/helper';
 import didInsert from '@ember/render-modifiers/modifiers/did-insert';
 
+import { GameEvent } from 'flimmerkasten-remote-control/models/game';
 import { PeerService } from 'flimmerkasten-remote-control/services/peer';
 import bem from 'flimmerkasten-remote-control/helpers/bem';
 
@@ -22,6 +23,7 @@ export class Snake extends Component<SnakeSignature> {
   @service declare peer: PeerService;
 
   // Defaults
+  game: string = 'snake';
   @tracked isPlaying = false;
 
   // Getter and setter
@@ -32,19 +34,26 @@ export class Snake extends Component<SnakeSignature> {
   // Functions
   listenToData = () => {
     this.connection?.on('data', (data) => {
-      switch (data) {
-        case 'snake:game-over':
-          this.isPlaying = false;
-          break;
-        case 'snake:playing':
-          this.isPlaying = true;
-          break;
+      const event = data as GameEvent;
+      if (this.game !== event.game) {
+        return;
+      }
+
+      if (event.name === 'host:game-over') {
+        this.isPlaying = false;
+      }
+
+      if (event.name === 'host:playing') {
+        this.isPlaying = true;
       }
     });
   };
 
-  sendMessage = (message: string) => {
-    this.connection?.send(message);
+  sendCommand = (name: string) => {
+    this.connection?.send({
+      game: this.game,
+      name: `remote:${name}`,
+    });
   };
 
   // Template
@@ -54,39 +63,40 @@ export class Snake extends Component<SnakeSignature> {
         <button
           type='button'
           class={{bem styles 'button' (hash type='up')}}
-          {{on 'click' (fn this.sendMessage 'snake:up')}}
+          {{on 'click' (fn this.sendCommand 'up')}}
         >
           <span class={{bem styles 'label'}}>Up</span>
         </button>
         <button
           type='button'
           class={{bem styles 'button' (hash type='down')}}
-          {{on 'click' (fn this.sendMessage 'snake:down')}}
+          {{on 'click' (fn this.sendCommand 'down')}}
         >
           <span class={{bem styles 'label'}}>Down</span>
         </button>
         <button
           type='button'
           class={{bem styles 'button' (hash type='left')}}
-          {{on 'click' (fn this.sendMessage 'snake:left')}}
+          {{on 'click' (fn this.sendCommand 'left')}}
         >
           <span class={{bem styles 'label'}}>Left</span>
         </button>
         <button
           type='button'
           class={{bem styles 'button' (hash type='right')}}
-          {{on 'click' (fn this.sendMessage 'snake:right')}}
+          {{on 'click' (fn this.sendCommand 'right')}}
         >
           <span class={{bem styles 'label'}}>Right</span>
         </button>
       {{else}}
         <div>
+          <h2>Snake</h2>
           <h1>Ready to play?</h1>
           <br />
           <button
             type='button'
             class={{bem styles 'button' (hash type='play')}}
-            {{on 'click' (fn this.sendMessage 'snake:play')}}
+            {{on 'click' (fn this.sendCommand 'play')}}
           >
             <span class={{bem styles 'label'}}>Start</span>
           </button>
