@@ -40,8 +40,9 @@ export class PeerService extends Service {
     });
 
     peer.on('error', (error) => {
-      console.log(`peer error`, error.type);
+      console.log(`peer error`, error.type, error.message);
       this.open = false;
+      this.errorMessage = error.message;
       this.createPeer.perform(1000);
     });
 
