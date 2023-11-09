@@ -17,12 +17,11 @@ input:not([type="search"]),
 input:not([type="range"]),
 input:not([type="checkbox"]) {
   padding: var(--spacing-small);
-  width: 100%;
   border-width: var(--border-width-small);
   border-style: solid;
   border-color: var(--color-black);
   font-family: var(--font-family);
-  font-size: var(--font-size);
+  font-size: var(--font-size-large);
 
   &:focus {
     outline: none;

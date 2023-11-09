@@ -1,48 +1,21 @@
-.button {
-  position: relative;
-  z-index: 1;
-  background-color: var(--color-grey-light);
-  border: var(--spacing-tiny) solid transparent;
-  padding: var(--spacing-small-tiny) var(--spacing-small-tiny)
-    var(--spacing-small) var(--spacing-small-tiny);
-  color: var(--color-black);
-  text-transform: uppercase;
-  border-image: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='%23343539' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0H4V4H0V0Z'/%3E%3Cpath d='M12 12H16V16H12V12Z'/%3E%3Cpath d='M0 12H4V16H0V12Z'/%3E%3Cpath d='M12 0H16V4H12V0Z'/%3E%3C/svg%3E%0A")
-    4 stretch;
+.scope {
+  text-align: center;
 }
 
-.button::before {
-  background-color: var(--color-grey-dark);
-  content: "";
-  border: var(--spacing-tiny) solid transparent;
-  position: absolute;
-  inset: 0;
-  border-image: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='%23d2d5bf' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0H4V4H0V0Z'/%3E%3Cpath d='M12 12H16V16H12V12Z'/%3E%3Cpath d='M0 12H4V16H0V12Z'/%3E%3Cpath d='M12 0H16V4H12V0Z'/%3E%3C/svg%3E%0A")
-    4 stretch;
-}
-
-.button::after {
-  background-color: var(--color-grey-light);
-  content: "";
-  border: var(--spacing-tiny) solid transparent;
-  position: absolute;
-  inset: var(--spacing-tiny);
-  border-image: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='%23778371' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0H4V4H0V0Z'/%3E%3Cpath d='M12 12H16V16H12V12Z'/%3E%3Cpath d='M0 12H4V16H0V12Z'/%3E%3Cpath d='M12 0H16V4H12V0Z'/%3E%3C/svg%3E%0A")
-    4 stretch;
-}
-
-.button--type-confirm {
-  left: 50%;
-  transform: translate(-50%, 0);
-  margin-bottom: var(--spacing-base);
+.form {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
 
 .label {
-  position: relative;
-  z-index: 2;
+  text-align: center;
+  margin-bottom: var(--spacing-small);
+  display: block;
 }
 
 .input {
   margin-bottom: var(--spacing-base);
   text-align: center;
+  display: block;
 }
