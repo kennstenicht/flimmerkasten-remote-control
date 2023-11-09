@@ -22,8 +22,18 @@ input:not([type="checkbox"]) {
   border-color: var(--color-black);
   font-family: var(--font-family);
   font-size: var(--font-size-large);
+  background-color: red;
+  background-color: var(--color-grey-light);
+  color: var(--color-grey-darker);
+  border: var(--spacing-tiny) solid transparent;
+  border-image: url("data:image/svg+xml,%3Csvg width='16' height='16' viewBox='0 0 16 16' fill='%23414141' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M0 0H4V4H0V0Z'/%3E%3Cpath d='M12 12H16V16H12V12Z'/%3E%3Cpath d='M0 12H4V16H0V12Z'/%3E%3Cpath d='M12 0H16V4H12V0Z'/%3E%3C/svg%3E%0A")
+    4 stretch;
 
   &:focus {
     outline: none;
+  }
+
+  &::placeholder {
+    color: var(--color-grey);
   }
 }
