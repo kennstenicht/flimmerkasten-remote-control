@@ -8,3 +8,27 @@
   align-items: center;
   height: 100dvh;
 }
+
+.headline {
+  text-align: center;
+}
+
+.rotate-hint {
+  position: fixed;
+  z-index: 999;
+  inset: 0;
+  background-color: rgb(65 65 65 / 90%);
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  gap: var(--spacing-huge);
+  padding: var(--spacing-large);
+  align-items: center;
+  justify-content: center;
+}
+
+@media (orientation: landscape) {
+  .rotate-hint {
+    display: none;
+  }
+}

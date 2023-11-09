@@ -8,10 +8,10 @@ import { restartableTask } from 'ember-concurrency';
 import perform from 'ember-concurrency/helpers/perform';
 import { registerDestructor } from '@ember/destroyable';
 import { on } from '@ember/modifier';
-import { hash } from '@ember/helper';
 import { tracked } from '@glimmer/tracking';
 
-import bem from 'flimmerkasten-remote-control/helpers/bem';
+import { bem } from 'flimmerkasten-remote-control/helpers/bem';
+import { Button } from 'flimmerkasten-remote-control/components/ui/button';
 
 import styles from './styles.css';
 
@@ -31,7 +31,7 @@ export class RemoteControl extends Component<RemoteControlSignature> {
   constructor(owner: RemoteControl, args: RemoteControlSignature['Args']) {
     super(owner, args);
 
-    this.playerName = localStorage.getItem(playerNameKey) || 'player name';
+    this.playerName = localStorage.getItem(playerNameKey) ?? '';
 
     registerDestructor(this, () => {
       this.connection?.close();
@@ -52,7 +52,9 @@ export class RemoteControl extends Component<RemoteControlSignature> {
   }
 
   // Functions
-  createConnection = restartableTask(async () => {
+  createConnection = restartableTask(async (e) => {
+    e.preventDefault();
+
     const connection = this.peer.object?.connect(this.args.model, {
       metadata: { playerName: this.playerName },
     });
@@ -76,38 +78,30 @@ export class RemoteControl extends Component<RemoteControlSignature> {
     });
   });
 
-  setHead = () => {
-    this.head.title = `connected to ${this.args.model}`;
-    this.head.favicon = faviconConnected;
-  };
-
   // Template
   <template>
     {{#if this.connection}}
       {{! template-lint-disable no-outlet-outside-routes }}
       {{outlet}}
     {{else}}
-      <div>
-        <label>
-          <input
-            class={{bem styles 'input'}}
-            value={{this.playerName}}
-            {{on 'input' this.updateName}}
-          />
-        </label>
+      <form
+        class={{bem styles 'form'}}
+        {{on 'submit' (perform this.createConnection)}}
+      >
+        <label class={{bem styles 'label'}} for='name'>Enter your name!</label>
+        <input
+          id='name'
+          class={{bem styles 'input'}}
+          value={{this.playerName}}
+          required='true'
+          placeholder='Your name'
+          {{on 'input' this.updateName}}
+        />
 
-        <button
-          type='button'
-          class={{bem styles 'button' (hash type='confirm')}}
-          {{on 'click' (perform this.createConnection)}}
-        >
-          <span class={{bem styles 'label'}}>Confirm</span>
-        </button>
-
-        <h1>
-          Connecting...
-        </h1>
-      </div>
+        <Button type='submit'>
+          Confirm
+        </Button>
+      </form>
     {{/if}}
   </template>
 }

@@ -6,6 +6,9 @@ import { fn } from '@ember/helper';
 import { hash } from '@ember/helper';
 import didInsert from '@ember/render-modifiers/modifiers/did-insert';
 
+import { TrackedMap } from 'tracked-built-ins';
+
+import { Button } from 'flimmerkasten-remote-control/components/ui/button';
 import { GameEvent } from 'flimmerkasten-remote-control/models/game';
 import { PeerService } from 'flimmerkasten-remote-control/services/peer';
 import bem from 'flimmerkasten-remote-control/helpers/bem';
@@ -25,6 +28,7 @@ export class Tetris extends Component<TetrisSignature> {
   // Defaults
   game: string = 'tetris';
   @tracked isPlaying = false;
+  intervals = new TrackedMap<string, number>();
 
   // Getter and setter
   get connection() {
@@ -49,6 +53,17 @@ export class Tetris extends Component<TetrisSignature> {
     });
   };
 
+  onTouchstart = (name: string) => {
+    this.intervals.set(
+      name,
+      setInterval(() => this.sendCommand(name), 70),
+    );
+  };
+
+  onTouchend = (name: string) => {
+    clearInterval(this.intervals.get(name));
+  };
+
   sendCommand = (name: string) => {
     this.connection?.send({
       game: this.game,
@@ -58,48 +73,50 @@ export class Tetris extends Component<TetrisSignature> {
 
   // Template
   <template>
-    <div {{didInsert this.listenToData}}>
+    <div class={{bem styles}} {{didInsert this.listenToData}}>
       {{#if this.isPlaying}}
-        <button
+        <Button
           type='button'
           class={{bem styles 'button' (hash type='up')}}
-          {{on 'click' (fn this.sendCommand 'up')}}
+          {{on 'touchstart' (fn this.onTouchstart 'up')}}
+          {{on 'touchend' (fn this.onTouchend 'up')}}
         >
-          <span class={{bem styles 'label'}}>Up</span>
-        </button>
-        <button
+          Up
+        </Button>
+        <Button
           type='button'
           class={{bem styles 'button' (hash type='down')}}
-          {{on 'click' (fn this.sendCommand 'down')}}
+          {{on 'touchstart' (fn this.onTouchstart 'down')}}
+          {{on 'touchend' (fn this.onTouchend 'down')}}
         >
-          <span class={{bem styles 'label'}}>Down</span>
-        </button>
-        <button
+          Down
+        </Button>
+        <Button
           type='button'
           class={{bem styles 'button' (hash type='left')}}
-          {{on 'click' (fn this.sendCommand 'left')}}
+          {{on 'touchstart' (fn this.onTouchstart 'left')}}
+          {{on 'touchend' (fn this.onTouchend 'left')}}
         >
-          <span class={{bem styles 'label'}}>Left</span>
-        </button>
-        <button
+          Left
+        </Button>
+        <Button
           type='button'
           class={{bem styles 'button' (hash type='right')}}
-          {{on 'click' (fn this.sendCommand 'right')}}
+          {{on 'touchstart' (fn this.onTouchstart 'right')}}
+          {{on 'touchend' (fn this.onTouchend 'right')}}
         >
-          <span class={{bem styles 'label'}}>Right</span>
-        </button>
+          Right
+        </Button>
       {{else}}
         <div>
-          <h2>Tetris</h2>
-          <h1>Ready to play?</h1>
-          <br />
-          <button
+          <h1>Ready to play Tetris?</h1>
+          <Button
             type='button'
             class={{bem styles 'button' (hash type='play')}}
             {{on 'click' (fn this.sendCommand 'play')}}
           >
             <span class={{bem styles 'label'}}>Start</span>
-          </button>
+          </Button>
         </div>
       {{/if}}
     </div>

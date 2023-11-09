@@ -29,6 +29,7 @@
   =========================================================================== */
 
   /* Base font size */
+  --font-size-large: 16px;
   --font-size: 12px;
   --font-size-small: 10px;
 

@@ -28,5 +28,9 @@ body {
   font-family: var(--font-family);
   -moz-osx-font-smoothing: grayscale;
   -webkit-font-smoothing: antialiased;
-  touch-action: manipulation;
+  touch-action: none;
+  -webkit-touch-callout: none;
+  /* stylelint-disable-next-line property-no-vendor-prefix */
+  -webkit-user-select: none;
+  user-select: none;
 }
