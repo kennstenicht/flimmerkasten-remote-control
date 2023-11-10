@@ -52,6 +52,11 @@ export class Tetris extends Component<TetrisSignature> {
 
       if (event.name === 'host:game-over') {
         this.isPlaying = false;
+
+        // Clear all intervals in this.intervals
+        this.intervals.forEach((_, name) => {
+          clearInterval(this.intervals.get(name));
+        });
       }
 
       if (event.name === 'host:playing') {
