@@ -1,0 +1,35 @@
+.scope {
+  text-align: center;
+}
+
+.button--type-left {
+  position: fixed;
+  left: var(--spacing-small);
+  top: var(--spacing-small);
+  bottom: var(--spacing-small);
+  width: calc(25% - var(--spacing-small));
+}
+
+.button--type-right {
+  position: fixed;
+  right: var(--spacing-small);
+  top: var(--spacing-small);
+  bottom: var(--spacing-small);
+  width: calc(25% - var(--spacing-small));
+}
+
+.button--type-up {
+  position: fixed;
+  left: calc(25% + var(--spacing-small));
+  top: var(--spacing-small);
+  height: calc(50% - var(--spacing-small-tiny));
+  width: calc(50% - var(--spacing-base));
+}
+
+.button--type-down {
+  position: fixed;
+  left: calc(25% + var(--spacing-small));
+  width: calc(50% - var(--spacing-base));
+  bottom: var(--spacing-small);
+  height: calc(50% - var(--spacing-small-tiny));
+}
