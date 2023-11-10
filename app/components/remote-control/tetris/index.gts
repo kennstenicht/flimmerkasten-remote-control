@@ -1,10 +1,10 @@
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
-import { inject as service } from '@ember/service';
+import { fn, hash } from '@ember/helper';
 import { on } from '@ember/modifier';
-import { fn } from '@ember/helper';
-import { hash } from '@ember/helper';
+import type Owner from '@ember/owner';
 import didInsert from '@ember/render-modifiers/modifiers/did-insert';
+import { inject as service } from '@ember/service';
+import { tracked } from '@glimmer/tracking';
 
 import { TrackedMap } from 'tracked-built-ins';
 
@@ -29,6 +29,13 @@ export class Tetris extends Component<TetrisSignature> {
   game: string = 'tetris';
   @tracked isPlaying = false;
   intervals = new TrackedMap<string, number>();
+
+  // Constructor
+  constructor(owner: Owner, args: TetrisSignature['Args']) {
+    super(owner, args);
+
+    this.sendCommand('setup-game');
+  }
 
   // Getter and setter
   get connection() {
