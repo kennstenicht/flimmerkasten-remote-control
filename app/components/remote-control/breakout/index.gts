@@ -67,7 +67,7 @@ export class Breakout extends Component<BreakoutSignature> {
   onTouchstart = (name: string) => {
     this.intervals.set(
       name,
-      setInterval(() => this.sendCommand(name), 70),
+      setInterval(() => this.sendCommand(name), 20),
     );
   };
 
@@ -91,16 +91,8 @@ export class Breakout extends Component<BreakoutSignature> {
       {{#if this.isPlaying}}
         <Button
           type='button'
-          class={{bem styles 'button' (hash type='up')}}
-          {{on 'click' (fn this.sendCommand 'up')}}
-        >
-          Up
-        </Button>
-        <Button
-          type='button'
           class={{bem styles 'button' (hash type='down')}}
-          {{on 'touchstart' (fn this.onTouchstart 'down')}}
-          {{on 'touchend' (fn this.onTouchend 'down')}}
+          {{on 'click' (fn this.sendCommand 'down')}}
         >
           Down
         </Button>
