@@ -85,8 +85,7 @@ export class Tetris extends Component<TetrisSignature> {
         <Button
           type='button'
           class={{bem styles 'button' (hash type='up')}}
-          {{on 'touchstart' (fn this.onTouchstart 'up')}}
-          {{on 'touchend' (fn this.onTouchend 'up')}}
+          {{on 'click' (fn this.sendCommand 'up')}}
         >
           Up
         </Button>
