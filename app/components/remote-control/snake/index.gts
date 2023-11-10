@@ -1,10 +1,10 @@
 import Component from '@glimmer/component';
-import { tracked } from '@glimmer/tracking';
-import { inject as service } from '@ember/service';
+import { fn, hash } from '@ember/helper';
 import { on } from '@ember/modifier';
-import { fn } from '@ember/helper';
-import { hash } from '@ember/helper';
+import type Owner from '@ember/owner';
 import didInsert from '@ember/render-modifiers/modifiers/did-insert';
+import { inject as service } from '@ember/service';
+import { tracked } from '@glimmer/tracking';
 
 import { Button } from 'flimmerkasten-remote-control/components/ui/button';
 import { GameEvent } from 'flimmerkasten-remote-control/models/game';
@@ -28,7 +28,7 @@ export class Snake extends Component<SnakeSignature> {
   @tracked isPlaying = false;
 
   // Constructor
-  constructor(owner: Snake, args: SnakeSignature['Args']) {
+  constructor(owner: Owner, args: SnakeSignature['Args']) {
     super(owner, args);
 
     this.sendCommand('setup-game');
