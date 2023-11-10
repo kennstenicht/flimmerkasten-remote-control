@@ -30,6 +30,13 @@ export class Tetris extends Component<TetrisSignature> {
   @tracked isPlaying = false;
   intervals = new TrackedMap<string, number>();
 
+  // Constructor
+  constructor(owner: Tetris, args: TetrisSignature['Args']) {
+    super(owner, args);
+
+    this.sendCommand('setup-game');
+  }
+
   // Getter and setter
   get connection() {
     return this.peer.connections.get(this.args.model);

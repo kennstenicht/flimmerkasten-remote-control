@@ -27,6 +27,13 @@ export class Snake extends Component<SnakeSignature> {
   game: string = 'snake';
   @tracked isPlaying = false;
 
+  // Constructor
+  constructor(owner: Snake, args: SnakeSignature['Args']) {
+    super(owner, args);
+
+    this.sendCommand('setup-game');
+  }
+
   // Getter and setter
   get connection() {
     return this.peer.connections.get(this.args.model);
