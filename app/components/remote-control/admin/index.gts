@@ -1,9 +1,11 @@
 import Component from '@glimmer/component';
-import { inject as service } from '@ember/service';
+import { fn } from '@ember/helper';
 import { on } from '@ember/modifier';
+import type Owner from '@ember/owner';
+import { LinkTo } from '@ember/routing';
+import { inject as service } from '@ember/service';
 import { PeerService } from 'flimmerkasten-remote-control/services/peer';
 import Button from 'flimmerkasten-remote-control/components/ui/button';
-import { fn } from '@ember/helper';
 
 interface AdminSignature {
   Args: {
@@ -14,6 +16,13 @@ interface AdminSignature {
 export class Admin extends Component<AdminSignature> {
   // Services
   @service declare peer: PeerService;
+
+  // Constructor
+  constructor(owner: Owner, args: AdminSignature['Args']) {
+    super(owner, args);
+
+    localStorage.setItem('flimmerkasten:admin', 'true');
+  }
 
   // Getter and setter
   get connection() {
@@ -30,6 +39,12 @@ export class Admin extends Component<AdminSignature> {
 
   // Template
   <template>
+    <div>
+      <LinkTo @route='remote-control.breakout'>Breakout</LinkTo>
+      <LinkTo @route='remote-control.snake'>Snake</LinkTo>
+      <LinkTo @route='remote-control.tetris'>Tetris</LinkTo>
+    </div>
+
     <Button type='button' {{on 'click' (fn this.sendCommand 'reload')}}>
       Reload
     </Button>

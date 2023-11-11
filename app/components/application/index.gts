@@ -6,6 +6,7 @@ import { PeerService } from 'flimmerkasten-remote-control/services/peer';
 import bem from 'flimmerkasten-remote-control/helpers/bem';
 
 import { Head } from './head';
+import { AdminNavigation } from './admin-navigation';
 import styles from './styles.css';
 
 export class Application extends Component {
@@ -17,6 +18,7 @@ export class Application extends Component {
     <Head />
 
     <div class={{bem styles}}>
+      <AdminNavigation />
       {{#if this.peer.open}}
         {{! template-lint-disable no-outlet-outside-routes }}
         {{outlet}}
