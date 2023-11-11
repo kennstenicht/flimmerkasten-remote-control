@@ -14,23 +14,23 @@ import bem from 'flimmerkasten-remote-control/helpers/bem';
 
 import styles from './styles.css';
 
-interface TetrisSignature {
+interface BreakoutSignature {
   Args: {
     model: string;
   };
 }
 
-export class Tetris extends Component<TetrisSignature> {
+export class Breakout extends Component<BreakoutSignature> {
   // Services
   @service declare peer: PeerService;
 
   // Defaults
-  game: string = 'tetris';
+  game: string = 'breakout';
   @tracked isPlaying = false;
   intervals = new TrackedMap<string, number>();
 
   // Constructor
-  constructor(owner: Owner, args: TetrisSignature['Args']) {
+  constructor(owner: Owner, args: BreakoutSignature['Args']) {
     super(owner, args);
 
     this.sendCommand('setup-game');
@@ -67,12 +67,15 @@ export class Tetris extends Component<TetrisSignature> {
   onTouchstart = (name: string) => {
     this.intervals.set(
       name,
-      setInterval(() => this.sendCommand(name), 70),
+      setInterval(() => this.sendCommand(name), 20),
     );
   };
 
   onTouchend = (name: string) => {
+    console.log('onTouchend', name);
+
     clearInterval(this.intervals.get(name));
+    this.sendCommand('stop');
   };
 
   sendCommand = (name: string) => {
@@ -88,16 +91,8 @@ export class Tetris extends Component<TetrisSignature> {
       {{#if this.isPlaying}}
         <Button
           type='button'
-          class={{bem styles 'button' (hash type='up')}}
-          {{on 'click' (fn this.sendCommand 'up')}}
-        >
-          Up
-        </Button>
-        <Button
-          type='button'
           class={{bem styles 'button' (hash type='down')}}
-          {{on 'touchstart' (fn this.onTouchstart 'down')}}
-          {{on 'touchend' (fn this.onTouchend 'down')}}
+          {{on 'click' (fn this.sendCommand 'down')}}
         >
           Down
         </Button>
@@ -118,19 +113,13 @@ export class Tetris extends Component<TetrisSignature> {
           Right
         </Button>
       {{else}}
-        <div>
-          <h1>Ready to play Tetris?</h1>
-          <Button
-            type='button'
-            class={{bem styles 'button' (hash type='play')}}
-            {{on 'click' (fn this.sendCommand 'play')}}
-          >
-            <span class={{bem styles 'label'}}>Start</span>
-          </Button>
-        </div>
+        <h1>Ready to play Breakout?</h1>
+        <Button type='button' {{on 'click' (fn this.sendCommand 'play')}}>
+          Start
+        </Button>
       {{/if}}
     </div>
   </template>
 }
 
-export default Tetris;
+export default Breakout;

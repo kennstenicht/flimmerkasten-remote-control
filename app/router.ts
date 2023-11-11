@@ -12,6 +12,7 @@ Router.map(function () {
     this.route('iframe');
     this.route('tetris');
     this.route('snake');
+    this.route('breakout');
   });
   // Add route declarations here
 });
