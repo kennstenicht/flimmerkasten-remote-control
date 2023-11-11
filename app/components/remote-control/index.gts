@@ -74,6 +74,9 @@ export class RemoteControl extends Component<RemoteControlSignature> {
     connection?.on('error', (error) => {
       this.head.title = `connection error ${this.args.model}`;
       this.head.favicon = faviconDisconnected;
+      this.peer.open = false;
+      this.peer.errorMessage = error.message;
+      this.peer.createPeer.perform(1000);
       console.log(`connection ${this.args.model} error`, error.type);
     });
   });
