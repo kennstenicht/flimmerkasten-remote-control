@@ -94,7 +94,7 @@ export class Breakout extends Component<BreakoutSignature> {
           class={{bem styles 'button' (hash type='down')}}
           {{on 'click' (fn this.sendCommand 'down')}}
         >
-          Down
+          Start
         </Button>
         <Button
           type='button'
